@@ -1,23 +1,10 @@
-/*
- * This class is intended to be the main class for this Project. All necessary methods are getting calls from this class.
- *
- *
- */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class User {
-
-    //        ************************************************************ Fields ************************************************************
-
-    /*2D Array to store admin credentials. Default credentials are stored on [0][0] index. Max num of admins can be 10....*/
     static String[][] adminUserNameAndPassword = new String[10][2];
-    private static List<Customer> customersCollection = new ArrayList<>();
-
-    //        ************************************************************ Behaviours/Methods ************************************************************
-
+    private static final List<Customer> customersCollection = new ArrayList<>();
     public static void main(String[] args) {
         int countNumOfUsers = 1;
         RolesAndPermissions r1 = new RolesAndPermissions();
@@ -25,26 +12,18 @@ public class User {
         FlightReservation bookingAndReserving = new FlightReservation();
         Customer c1 = new Customer();
         f1.flightScheduler();
-        Scanner read = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
 
-
-        welcomeScreen(1);
-        System.out.println("\n\t\t\t\t\t+++++++++++++ Welcome to BAV AirLines +++++++++++++\n\nTo Further Proceed, Please enter a value.");
-        System.out.println("\n***** Default Username && Password is root-root ***** Using Default Credentials will restrict you to just view the list of Passengers....\n");
+        System.out.println("\n\t\t\t\t\t+++++++++++++ Welcome to NYIT AirLines +++++++++++++\n\nTo Further Proceed, Please enter a value.");
         displayMainMenu();
-        int desiredOption = read.nextInt();
+        int desiredOption = in.nextInt();
         while (desiredOption < 0 || desiredOption > 8) {
             System.out.print("ERROR!! Please enter value between 0 - 4. Enter the value again :\t");
-            desiredOption = read.nextInt();
+            desiredOption = in.nextInt();
         }
-
 
         do {
             Scanner read1 = new Scanner(System.in);
-            /* If desiredOption is 1 then call the login method.... if default credentials are used then set the permission
-             * level to standard/default where the user can just view the customer's data...if not found, then return -1, and if
-             * data is found then show the user display menu for adding, updating, deleting and searching users/customers...
-             * */
             if (desiredOption == 1) {
 
                 /*Default username and password....*/
@@ -81,7 +60,7 @@ public class User {
                         System.out.printf("%-30s (h) Enter 8 to Delete a Flight....\n", "");
                         System.out.printf("%-30s (i) Enter 0 to Go back to the Main Menu/Logout....\n", "");
                         System.out.print("Enter the desired Choice :   ");
-                        desiredOption = read.nextInt();
+                        desiredOption = in.nextInt();
                         /*If 1 is entered by the privileged user, then add a new customer......*/
                         if (desiredOption == 1) {
                             c1.displayArtWork(1);
@@ -102,7 +81,7 @@ public class User {
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Update its Data :\t");
                             String customerID = read1.nextLine();
-                            if (customersCollection.size() > 0) {
+                            if (!customersCollection.isEmpty()) {
                                 c1.editUserInfo(customerID);
                             } else {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
@@ -116,7 +95,7 @@ public class User {
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Delete its Data :\t");
                             String customerID = read1.nextLine();
-                            if (customersCollection.size() > 0) {
+                            if (!customersCollection.isEmpty()) {
                                 c1.deleteUser(customerID);
                             } else {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
@@ -207,17 +186,17 @@ public class User {
                         System.out.printf("%-40s (f) Enter 6 to Display all flights registered by \"%s\"....\n", "", userName);
                         System.out.printf("%-40s (g) Enter 0 to Go back to the Main Menu/Logout....\n", "");
                         System.out.print("Enter the desired Choice :   ");
-                        desiredChoice = read.nextInt();
+                        desiredChoice = in.nextInt();
                         if (desiredChoice == 1) {
                             bookingAndReserving.displayArtWork(1);
                             f1.displayFlightSchedule();
                             System.out.print("\nEnter the desired flight number to book :\t ");
                             String flightToBeBooked = read1.nextLine();
                             System.out.print("Enter the Number of tickets for " + flightToBeBooked + " flight :   ");
-                            int numOfTickets = read.nextInt();
+                            int numOfTickets = in.nextInt();
                             while (numOfTickets > 10) {
                                 System.out.print("ERROR!! You can't book more than 10 tickets at a time for single flight....Enter number of tickets again : ");
-                                numOfTickets = read.nextInt();
+                                numOfTickets = in.nextInt();
                             }
                             bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
                         } else if (desiredChoice == 2) {
@@ -270,7 +249,6 @@ public class User {
                 desiredOption = read1.nextInt();
             }
         } while (desiredOption != 0);
-        welcomeScreen(-1);
     }
 
     static void displayMainMenu() {
@@ -320,51 +298,6 @@ public class User {
             System.out.println("(11) Pressing \"6\" will display all flights registered by you...\n");
             System.out.println("(12) Pressing \"0\" will make you logout of the program...You can login back at anytime with your credentials...for this particular run-time... \n");
         }
-    }
-
-    static void welcomeScreen(int option) {
-        String artWork;
-
-        if (option == 1) {
-            artWork = """
-
-                    888       888          888                                                888                   888888b.          d8888 888     888              d8888 d8b         888 d8b                           \s
-                    888   o   888          888                                                888                   888  "88b        d88888 888     888             d88888 Y8P         888 Y8P                           \s
-                    888  d8b  888          888                                                888                   888  .88P       d88P888 888     888            d88P888             888                               \s
-                    888 d888b 888  .d88b.  888  .d8888b  .d88b.  88888b.d88b.   .d88b.        888888  .d88b.        8888888K.      d88P 888 Y88b   d88P           d88P 888 888 888d888 888 888 88888b.   .d88b.  .d8888b \s
-                    888d88888b888 d8P  Y8b 888 d88P"    d88""88b 888 "888 "88b d8P  Y8b       888    d88""88b       888  "Y88b    d88P  888  Y88b d88P           d88P  888 888 888P"   888 888 888 "88b d8P  Y8b 88K     \s
-                    88888P Y88888 88888888 888 888      888  888 888  888  888 88888888       888    888  888       888    888   d88P   888   Y88o88P           d88P   888 888 888     888 888 888  888 88888888 "Y8888b.\s
-                    8888P   Y8888 Y8b.     888 Y88b.    Y88..88P 888  888  888 Y8b.           Y88b.  Y88..88P       888   d88P  d8888888888    Y888P           d8888888888 888 888     888 888 888  888 Y8b.          X88\s
-                    888P     Y888  "Y8888  888  "Y8888P  "Y88P"  888  888  888  "Y8888         "Y888  "Y88P"        8888888P"  d88P     888     Y8P           d88P     888 888 888     888 888 888  888  "Y8888   88888P'\s
-                                                                                                                                                                                                                         \s
-                                                                                                                                                                                                                         \s
-                                                                                                                                                                                                                         \s
-                    """;
-        } else {
-            artWork = """
-                                        
-                                        
-                                        
-                                        
-                    d88888b db      db    db d888888b d8b   db  d888b       db   d8b   db d888888b d888888b db   db      d888888b d8888b. db    db .d8888. d888888b      \s
-                    88'     88      `8b  d8'   `88'   888o  88 88' Y8b      88   I8I   88   `88'   `~~88~~' 88   88      `~~88~~' 88  `8D 88    88 88'  YP `~~88~~'      \s
-                    88ooo   88       `8bd8'     88    88V8o 88 88           88   I8I   88    88       88    88ooo88         88    88oobY' 88    88 `8bo.      88         \s
-                    88~~~   88         88       88    88 V8o88 88  ooo      Y8   I8I   88    88       88    88~~~88         88    88`8b   88    88   `Y8b.    88         \s
-                    88      88booo.    88      .88.   88  V888 88. ~8~      `8b d8'8b d8'   .88.      88    88   88         88    88 `88. 88b  d88 db   8D    88         \s
-                    YP      Y88888P    YP    Y888888P VP   V8P  Y888P        `8b8' `8d8'  Y888888P    YP    YP   YP         YP    88   YD ~Y8888P' `8888Y'    YP         \s
-                                                                                                                                                                         \s
-                                                                                                                                                                         \s
-                    d88888b  .d88b.  d8888b.      d88888b d888888b db    db d88888b      d8888b. d88888b  .o88b.  .d8b.  d8888b. d88888b .d8888.                       db\s
-                    88'     .8P  Y8. 88  `8D      88'       `88'   88    88 88'          88  `8D 88'     d8P  Y8 d8' `8b 88  `8D 88'     88'  YP                       88\s
-                    88ooo   88    88 88oobY'      88ooo      88    Y8    8P 88ooooo      88   88 88ooooo 8P      88ooo88 88   88 88ooooo `8bo.                         YP\s
-                    88~~~   88    88 88`8b        88~~~      88    `8b  d8' 88~~~~~      88   88 88~~~~~ 8b      88~~~88 88   88 88~~~~~   `Y8b.                         \s
-                    88      `8b  d8' 88 `88.      88        .88.    `8bd8'  88.          88  .8D 88.     Y8b  d8 88   88 88  .8D 88.     db   8D      db db db db      db\s
-                    YP       `Y88P'  88   YD      YP      Y888888P    YP    Y88888P      Y8888D' Y88888P  `Y88P' YP   YP Y8888D' Y88888P `8888Y'      VP VP VP VP      YP\s
-                                                                                                                                                                         \s
-                                                                                                                                                                         \s
-                    """;
-        }
-        System.out.println(artWork);
     }
 
     static void printArtWork(int option) {

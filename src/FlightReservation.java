@@ -73,7 +73,7 @@ public class FlightReservation implements DisplayClass {
         boolean isFound = false;
         for (Customer customer : Customer.customerCollection) {
             if (userID.equals(customer.getUserID())) {
-                if (customer.getFlightsRegisteredByUser().size() != 0) {
+                if (!customer.getFlightsRegisteredByUser().isEmpty()) {
                     System.out.printf("%50s %s Here is the list of all the Flights registered by you %s", " ", "++++++++++++++", "++++++++++++++");
                     displayFlightsRegisteredByOneUser(userID);
                     System.out.print("Enter the Flight Number of the Flight you want to cancel : ");
@@ -206,16 +206,6 @@ public class FlightReservation implements DisplayClass {
         }
     }
 
-    int flightIndex(List<Flight> flightList, Flight flight) {
-        int i = -1;
-        for (Flight flight1 : flightList) {
-            if (flight1.equals(flight)) {
-                i = flightList.indexOf(flight1);
-            }
-        }
-        return i;
-    }
-
     @Override
     public void displayRegisteredUsersForASpecificFlight(String flightNum) {
         System.out.println();
@@ -226,6 +216,27 @@ public class FlightReservation implements DisplayClass {
             }
         }
     }
+
+    int flightIndex(List<Flight> flightList, Flight flight) {
+        int i = -1;
+        for (Flight flight1 : flightList) {
+            if (flight1.equals(flight)) {
+                i = flightList.indexOf(flight1);
+            }
+        }
+        return i;
+    }
+
+//    @Override
+//    public void displayRegisteredUsersForASpecificFlight(String flightNum) {
+//        System.out.println();
+//        for (Flight flight : flight.getFlightList()) {
+//            List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
+//            if (flight.getFlightNumber().equalsIgnoreCase(flightNum)) {
+//                displayHeaderForUsers(flight, c);
+//            }
+//        }
+//    }
 
     @Override
     public void displayArtWork(int option) {
