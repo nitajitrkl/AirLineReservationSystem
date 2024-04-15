@@ -5,7 +5,6 @@
 # AirLineReservationSystem
 A Java-based airline reservation system that uses Object-Oriented Programming. The system can manage customers, admins, flight booking and cancellation.
 It also includes many other features implemented in Java using OOP concepts like inheritance, encapsulation, association, and composition.
-## ![image](https://user-images.githubusercontent.com/72850566/167471464-0afa5c6a-806d-4a62-97d4-947e73cd92d2.png)
 # Features
 The reservation system demonstrates the role of both the admin and the passenger. The admin sets up and manages the reservation system, while passengers use it to make reservations.
 ## 1. Customer Registration
