@@ -24,16 +24,15 @@ public class User {
         }
 
         do {
-            Scanner read1 = new Scanner(System.in);
             if (desiredOption == 1) {
 
                 adminUserNameAndPassword[0][0] = "root";
                 adminUserNameAndPassword[0][1] = "root";
                 printArtWork(1);
                 System.out.print("\nEnter the UserName to login to the Management System :     ");
-                String username = read1.nextLine();
+                String username = in.nextLine();
                 System.out.print("Enter the Password to login to the Management System :    ");
-                String password = read1.nextLine();
+                String password = in.nextLine();
                 System.out.println();
 
                 if (rolesAndPermissions.isPrivilegedUserOrNot(username, password) == -1) {
@@ -66,7 +65,7 @@ public class User {
                             customer.displayArtWork(2);
                             customer.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Search :\t");
-                            String customerID = read1.nextLine();
+                            String customerID = in.nextLine();
                             System.out.println();
                             customer.searchUser(customerID);
                         } else if (desiredOption == 3) {
@@ -74,7 +73,7 @@ public class User {
                             bookingAndReserving.displayArtWork(2);
                             customer.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Update its Data :\t");
-                            String customerID = read1.nextLine();
+                            String customerID = in.nextLine();
                             if (!customersCollection.isEmpty()) {
                                 customer.editUserInfo(customerID);
                             } else {
@@ -86,7 +85,7 @@ public class User {
                             bookingAndReserving.displayArtWork(3);
                             customer.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Delete its Data :\t");
-                            String customerID = read1.nextLine();
+                            String customerID = in.nextLine();
                             if (!customersCollection.isEmpty()) {
                                 customer.deleteUser(customerID);
                             } else {
@@ -99,19 +98,19 @@ public class User {
                             bookingAndReserving.displayArtWork(6);
                             customer.displayCustomersData(false);
                             System.out.print("\n\nEnter the ID of the user to display all flights registered by that user...");
-                            String id = read1.nextLine();
+                            String id = in.nextLine();
                             bookingAndReserving.displayFlightsRegisteredByOneUser(id);
                         } else if (desiredOption == 7) {
                             customer.displayArtWork(4);
                             System.out.print("Do you want to display Passengers of all flights or a specific flight.... 'Y/y' for displaying all flights and 'N/n' to look for a" +
                                     " specific flight.... ");
-                            char choice = read1.nextLine().charAt(0);
+                            char choice = in.nextLine().charAt(0);
                             if ('y' == choice || 'Y' == choice) {
                                 bookingAndReserving.displayRegisteredUsersForAllFlight();
                             } else if ('n' == choice || 'N' == choice) {
                                 flight.displayFlightSchedule();
                                 System.out.print("Enter the Flight Number to display the list of passengers registered in that flight... ");
-                                String flightNum = read1.nextLine();
+                                String flightNum = in.nextLine();
                                 bookingAndReserving.displayRegisteredUsersForASpecificFlight(flightNum);
                             } else {
                                 System.out.println("Invalid Choice...No Response...!");
@@ -120,7 +119,7 @@ public class User {
                             customer.displayArtWork(5);
                             flight.displayFlightSchedule();
                             System.out.print("Enter the Flight Number to delete the flight : ");
-                            String flightNum = read1.nextLine();
+                            String flightNum = in.nextLine();
                             flight.deleteFlight(flightNum);
 
                         } else if (desiredOption == 0) {
@@ -138,30 +137,28 @@ public class User {
                 }
             } else if (desiredOption == 2) {
                 printArtWork(2);
-                /*If desiredOption is 2, then call the registration method to register a user......*/
                 System.out.print("\nEnter the UserName to Register :    ");
-                String username = read1.nextLine();
+                String username = in.nextLine();
                 System.out.print("Enter the Password to Register :     ");
-                String password = read1.nextLine();
+                String password = in.nextLine();
                 while (rolesAndPermissions.isPrivilegedUserOrNot(username, password) != -1) {
                     System.out.print("ERROR!!! Admin with same UserName already exist. Enter new UserName:   ");
-                    username = read1.nextLine();
+                    username = in.nextLine();
                     System.out.print("Enter the Password Again:   ");
-                    password = read1.nextLine();
+                    password = in.nextLine();
                 }
 
-                /*Setting the credentials entered by the user.....*/
+
                 adminUserNameAndPassword[countNumOfUsers][0] = username;
                 adminUserNameAndPassword[countNumOfUsers][1] = password;
 
-                /*Incrementing the numOfUsers */
                 countNumOfUsers++;
             } else if (desiredOption == 3) {
                 printArtWork(3);
                 System.out.print("\n\nEnter the Email to Login : \t");
-                String userName = read1.nextLine();
+                String userName = in.nextLine();
                 System.out.print("Enter the Password : \t");
-                String password = read1.nextLine();
+                String password = in.nextLine();
                 String[] result = rolesAndPermissions.isPassengerRegistered(userName, password).split("-");
 
                 if (Integer.parseInt(result[0]) == 1) {
@@ -182,7 +179,7 @@ public class User {
                             bookingAndReserving.displayArtWork(1);
                             flight.displayFlightSchedule();
                             System.out.print("\nEnter the desired flight number to book :\t ");
-                            String flightToBeBooked = read1.nextLine();
+                            String flightToBeBooked = in.nextLine();
                             System.out.print("Enter the Number of tickets for " + flightToBeBooked + " flight :   ");
                             int numOfTickets = in.nextInt();
                             while (numOfTickets > 10) {
@@ -196,7 +193,7 @@ public class User {
                         } else if (desiredChoice == 3) {
                             bookingAndReserving.displayArtWork(3);
                             System.out.print("Are you sure to delete your account...It's an irreversible action...Enter Y/y to confirm...");
-                            char confirmationChar = read1.nextLine().charAt(0);
+                            char confirmationChar = in.nextLine().charAt(0);
                             if (confirmationChar == 'Y' || confirmationChar == 'y') {
                                 customer.deleteUser(result[1]);
                                 System.out.printf("User %s's account deleted Successfully...!!!", userName);
@@ -234,10 +231,10 @@ public class User {
             }
 
             displayMainMenu();
-            desiredOption = read1.nextInt();
+            desiredOption = in.nextInt();
             while (desiredOption < 0 || desiredOption > 8) {
                 System.out.print("ERROR!! Please enter value between 0 - 4. Enter the value again :\t");
-                desiredOption = read1.nextInt();
+                desiredOption = in.nextInt();
             }
         } while (desiredOption != 0);
     }
@@ -253,15 +250,15 @@ public class User {
     }
 
     static void manualInstructions() {
-        Scanner read = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
         System.out.printf("%n%n%50s %s Welcome to BAV Airlines User Manual %s", "", "+++++++++++++++++", "+++++++++++++++++");
         System.out.println("\n\n\t\t(a) Press 1 to display Admin Manual.");
         System.out.println("\t\t(b) Press 2 to display User Manual.");
         System.out.print("\nEnter the desired option :    ");
-        int choice = read.nextInt();
+        int choice = in.nextInt();
         while (choice < 1 || choice > 2) {
             System.out.print("ERROR!!! Invalid entry...Please enter a value either 1 or 2....Enter again....");
-            choice = read.nextInt();
+            choice = in.nextInt();
         }
         if (choice == 1) {
             System.out.println("\n\n(1) Admin have the access to all users data...Admin can delete, update, add and can perform search for any customer...\n");
