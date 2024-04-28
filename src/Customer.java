@@ -1,22 +1,6 @@
 import java.util.*;
 
 public class Customer {
-
-    //        ************************************************************ Fields ************************************************************
-    private final String userID;
-    private String email;
-    private String name;
-    private String phone;
-    private final String password;
-    private String address;
-    private int age;
-    public List<Flight> flightsRegisteredByUser;
-    public List<Integer> numOfTicketsBookedByUser;
-    public static final List<Customer> customerCollection = User.getCustomersCollection();
-
-    //        ************************************************************ Behaviours/Methods ************************************************************
-
-
     Customer() {
         this.userID = null;
         this.name = null;
@@ -27,17 +11,6 @@ public class Customer {
         this.age = 0;
     }
 
-    /**
-     * Registers new customer to the program. Obj of RandomGenerator(Composition) is
-     * being used to assign unique userID to the newly created customer.
-     *
-     * @param name     name of the customer
-     * @param email    customer's email
-     * @param password customer's account password
-     * @param phone    customer's phone-number
-     * @param address  customer's address
-     * @param age      customer's age
-     */
     Customer(String name, String email, String password, String phone, String address, int age) {
         RandomGenerator random = new RandomGenerator();
         random.randomIDGen();
@@ -52,11 +25,6 @@ public class Customer {
         this.numOfTicketsBookedByUser = new ArrayList<>();
     }
 
-    /**
-     * Takes input for the new customer and adds them to programs memory. isUniqueData() validates the entered email
-     * and returns true if the entered email is already registered. If email is already registered, program will ask the user
-     * to enter new email address to get himself register.
-     */
     public void addNewCustomer() {
         System.out.printf("\n\n\n%60s ++++++++++++++ Welcome to the Customer Registration Portal ++++++++++++++", "");
         Scanner read = new Scanner(System.in);
@@ -80,22 +48,10 @@ public class Customer {
         customerCollection.add(new Customer(name, email, password, phone, address, age));
     }
 
-    /**
-     * Returns String consisting of customers data(name, age, email etc...) for displaying.
-     * randomIDDisplay() adds space between the userID for easy readability.
-     *
-     * @param i for serial numbers.
-     * @return customers data in String
-     */
     private String toString(int i) {
         return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |", "", i, randomIDDisplay(userID), name, age, email, address, phone);
     }
 
-    /**
-     * Searches for customer with the given ID and displays the customers' data if found.
-     *
-     * @param ID of the searching/required customer
-     */
     public void searchUser(String ID) {
         boolean isFound = false;
         Customer customerWithTheID = customerCollection.get(0);
@@ -116,11 +72,6 @@ public class Customer {
         }
     }
 
-    /**
-     * Returns true if the given emailID is already registered, false otherwise
-     *
-     * @param emailID to be checked in the list
-     */
     public boolean isUniqueData(String emailID) {
         boolean isUnique = false;
         for (Customer c : customerCollection) {
@@ -177,10 +128,6 @@ public class Customer {
         }
     }
 
-    /**
-     * Shows the customers' data in formatted way.
-     * @param showHeader to check if we want to print ascii art for the customers' data.
-     */
     public void displayCustomersData(boolean showHeader) {
         if (showHeader) {
             displayArtWork(3);
@@ -196,9 +143,6 @@ public class Customer {
         }
     }
 
-    /**
-     * Shows the header for printing customers data
-     */
     void displayHeader() {
         System.out.println();
         System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n", "");
@@ -208,16 +152,6 @@ public class Customer {
 
     }
 
-    /**
-     * Adds space between userID to increase its readability
-     * <p>
-     * Example:
-     * </p>
-     * <b>"920 191" is much more readable than "920191"</b>
-     *
-     * @param randomID id to add space
-     * @return randomID with added space
-     */
     String randomIDDisplay(String randomID) {
         StringBuilder newString = new StringBuilder();
         for (int i = 0; i <= randomID.length(); i++) {
@@ -230,36 +164,21 @@ public class Customer {
         return newString.toString();
     }
 
-    /**
-     * Associates a new flight with the specified customer
-     *
-     * @param f flight to associate
-     */
     void addNewFlightToCustomerList(Flight f) {
         this.flightsRegisteredByUser.add(f);
 //        numOfFlights++;
     }
 
-    /**
-     * Adds numOfTickets to already booked flights
-     * @param index at which flight is registered in the arraylist
-     * @param numOfTickets how many tickets to add
-     */
     void addExistingFlightToCustomerList(int index, int numOfTickets) {
         int newNumOfTickets = numOfTicketsBookedByUser.get(index) + numOfTickets;
         this.numOfTicketsBookedByUser.set(index, newNumOfTickets);
     }
 
-    /**
-     * Prints out <b>"ASCII Art"</b> for the specified words.
-     *
-     * @param option specifies which word to print.
-     */
     void displayArtWork(int option) {
         String artWork = "";
         if (option == 1) {
             artWork = """
-                                        
+                                       \s
                     d8b   db d88888b db   d8b   db       .o88b. db    db .d8888. d888888b  .d88b.  .88b  d88. d88888b d8888b.\s
                     888o  88 88'     88   I8I   88      d8P  Y8 88    88 88'  YP `~~88~~' .8P  Y8. 88'YbdP`88 88'     88  `8D\s
                     88V8o 88 88ooooo 88   I8I   88      8P      88    88 `8bo.      88    88    88 88  88  88 88ooooo 88oobY'\s
@@ -268,10 +187,10 @@ public class Customer {
                     VP   V8P Y88888P  `8b8' `8d8'        `Y88P' ~Y8888P' `8888Y'    YP     `Y88P'  YP  YP  YP Y88888P 88   YD\s
                                                                                                                              \s
                                                                                                                              \s
-                    """;
+                   \s""";
         } else if (option == 2) {
             artWork = """
-                                        
+                                       \s
                     .d8888. d88888b  .d8b.  d8888b.  .o88b. db   db       .o88b. db    db .d8888. d888888b  .d88b.  .88b  d88. d88888b d8888b.\s
                     88'  YP 88'     d8' `8b 88  `8D d8P  Y8 88   88      d8P  Y8 88    88 88'  YP `~~88~~' .8P  Y8. 88'YbdP`88 88'     88  `8D\s
                     `8bo.   88ooooo 88ooo88 88oobY' 8P      88ooo88      8P      88    88 `8bo.      88    88    88 88  88  88 88ooooo 88oobY'\s
@@ -280,10 +199,10 @@ public class Customer {
                     `8888Y' Y88888P YP   YP 88   YD  `Y88P' YP   YP       `Y88P' ~Y8888P' `8888Y'    YP     `Y88P'  YP  YP  YP Y88888P 88   YD\s
                                                                                                                                               \s
                                                                                                                                               \s
-                    """;
+                   \s""";
         } else if (option == 3) {
             artWork = """
-                                        
+                                       \s
                     .d8888. db   db  .d88b.  db   d8b   db d888888b d8b   db  d888b        .d8b.  db      db           d8888b.  .d8b.  .d8888. .d8888. d88888b d8b   db  d888b  d88888b d8888b. .d8888.\s
                     88'  YP 88   88 .8P  Y8. 88   I8I   88   `88'   888o  88 88' Y8b      d8' `8b 88      88           88  `8D d8' `8b 88'  YP 88'  YP 88'     888o  88 88' Y8b 88'     88  `8D 88'  YP\s
                     `8bo.   88ooo88 88    88 88   I8I   88    88    88V8o 88 88           88ooo88 88      88           88oodD' 88ooo88 `8bo.   `8bo.   88ooooo 88V8o 88 88      88ooooo 88oobY' `8bo.  \s
@@ -292,17 +211,17 @@ public class Customer {
                     `8888Y' YP   YP  `Y88P'   `8b8' `8d8'  Y888888P VP   V8P  Y888P       YP   YP Y88888P Y88888P      88      YP   YP `8888Y' `8888Y' Y88888P VP   V8P  Y888P  Y88888P 88   YD `8888Y'\s
                                                                                                                                                                                                        \s
                                                                                                                                                                                                        \s
-                    """;
+                   \s""";
         } else if (option == 4) {
             artWork = """
-                                        
+                                       \s
                     d8888b. d88888b  d888b  d888888b .d8888. d888888b d88888b d8888b. d88888b d8888b.      d8888b.  .d8b.  .d8888. .d8888. d88888b d8b   db  d888b  d88888b d8888b. .d8888.     \s
                     88  `8D 88'     88' Y8b   `88'   88'  YP `~~88~~' 88'     88  `8D 88'     88  `8D      88  `8D d8' `8b 88'  YP 88'  YP 88'     888o  88 88' Y8b 88'     88  `8D 88'  YP     \s
                     88oobY' 88ooooo 88         88    `8bo.      88    88ooooo 88oobY' 88ooooo 88   88      88oodD' 88ooo88 `8bo.   `8bo.   88ooooo 88V8o 88 88      88ooooo 88oobY' `8bo.       \s
                     88`8b   88~~~~~ 88  ooo    88      `Y8b.    88    88~~~~~ 88`8b   88~~~~~ 88   88      88~~~   88~~~88   `Y8b.   `Y8b. 88~~~~~ 88 V8o88 88  ooo 88~~~~~ 88`8b     `Y8b.     \s
                     88 `88. 88.     88. ~8~   .88.   db   8D    88    88.     88 `88. 88.     88  .8D      88      88   88 db   8D db   8D 88.     88  V888 88. ~8~ 88.     88 `88. db   8D     \s
                     88   YD Y88888P  Y888P  Y888888P `8888Y'    YP    Y88888P 88   YD Y88888P Y8888D'      88      YP   YP `8888Y' `8888Y' Y88888P VP   V8P  Y888P  Y88888P 88   YD `8888Y' \s
-                                        
+                                       \s
                        \s
                     d888888b d8b   db      d88888b db      d888888b  d888b  db   db d888888b                                                                                                    \s
                       `88'   888o  88      88'     88        `88'   88' Y8b 88   88 `~~88~~'                                                                                                    \s
@@ -312,10 +231,10 @@ public class Customer {
                     Y888888P VP   V8P      YP      Y88888P Y888888P  Y888P  YP   YP    YP                                                                                                       \s
                                                                                                                                                                                                 \s
                                                                                                                                                                                                 \s
-                    """;
+                   \s""";
         } else if (option == 5) {
             artWork = """
-                                        
+                                       \s
                     d8888b. d88888b db      d88888b d888888b d88888b      d88888b db      d888888b  d888b  db   db d888888b\s
                     88  `8D 88'     88      88'     `~~88~~' 88'          88'     88        `88'   88' Y8b 88   88 `~~88~~'\s
                     88   88 88ooooo 88      88ooooo    88    88ooooo      88ooo   88         88    88      88ooo88    88   \s
@@ -324,12 +243,10 @@ public class Customer {
                     Y8888D' Y88888P Y88888P Y88888P    YP    Y88888P      YP      Y88888P Y888888P  Y888P  YP   YP    YP   \s
                                                                                                                            \s
                                                                                                                            \s
-                    """;
+                   \s""";
         }
         System.out.println(artWork);
     }
-
-    //        ************************************************************ Setters & Getters ************************************************************
 
     public List<Flight> getFlightsRegisteredByUser() {
         return flightsRegisteredByUser;
@@ -386,4 +303,15 @@ public class Customer {
     public void setAge(int age) {
         this.age = age;
     }
+
+    private final String userID;
+    private String email;
+    private String name;
+    private String phone;
+    private final String password;
+    private String address;
+    private int age;
+    public List<Flight> flightsRegisteredByUser;
+    public List<Integer> numOfTicketsBookedByUser;
+    public static final List<Customer> customerCollection = User.getCustomersCollection();
 }
