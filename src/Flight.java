@@ -30,7 +30,7 @@ public class Flight extends FlightDistance {
     }
 
     public void flightScheduler() {
-        int numOfFlights = 15;              // decides how many unique flights to be included/display in scheduler
+        int numOfFlights = 20;
         RandomGenerator r1 = new RandomGenerator();
         for (int i = 0; i < numOfFlights; i++) {
             String[][] chosenDestinations = r1.randomDestinations();
@@ -71,8 +71,6 @@ public class Flight extends FlightDistance {
         int hours = Integer.parseInt(timeArray[0]);
         int minutes = Integer.parseInt(timeArray[1]);
         int modulus = minutes % 5;
-
-        // Changing flight time to make minutes near/divisible to 5.
 
         if (modulus < 3) {
             minutes -= modulus;
