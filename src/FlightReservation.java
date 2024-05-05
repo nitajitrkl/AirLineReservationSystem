@@ -1,10 +1,3 @@
-/*
- * FlightReservation class allows the user to book, cancel and check the status of the registered flights.
- *
- *
- * */
-
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
