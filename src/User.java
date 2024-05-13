@@ -1,45 +1,58 @@
+// Main Class
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class User {
+
+
+    static String[][] adminUserNameAndPassword = new String[10][2];
+    private static List<Customer> customersCollection = new ArrayList<>();
+
+
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-
-        RolesAndPermissions rolesAndPermissions = new RolesAndPermissions();
-        Flight flight = new Flight();
-        FlightReservation bookingAndReserving = new FlightReservation();
-        Customer customer = new Customer();
-        flight.flightScheduler();
-
         int countNumOfUsers = 1;
+        RolesAndPermissions r1 = new RolesAndPermissions();
+        Flight f1 = new Flight();
+        FlightReservation bookingAndReserving = new FlightReservation();
+        Customer c1 = new Customer();
+        f1.flightScheduler();
+        Scanner read = new Scanner(System.in);
 
+
+        welcomeScreen(1);
         System.out.println("\n\t\t\t\t\t+++++++++++++ Welcome to NYIT AirLines +++++++++++++\n\nTo Further Proceed, Please enter a value.");
+        System.out.println("\n***** Default Username && Password is root-root ***** Using Default Credentials will restrict you to just view the list of Passengers....\n");
         displayMainMenu();
-        int desiredOption = in.nextInt();
-
+        int desiredOption = read.nextInt();
         while (desiredOption < 0 || desiredOption > 8) {
             System.out.print("ERROR!! Please enter value between 0 - 4. Enter the value again :\t");
-            desiredOption = in.nextInt();
+            desiredOption = read.nextInt();
         }
 
+
         do {
+            Scanner read1 = new Scanner(System.in);
+
             if (desiredOption == 1) {
 
+                /*Default username and password....*/
                 adminUserNameAndPassword[0][0] = "root";
                 adminUserNameAndPassword[0][1] = "root";
+
                 printArtWork(1);
                 System.out.print("\nEnter the UserName to login to the Management System :     ");
-                String username = in.nextLine();
+                String username = read1.nextLine();
                 System.out.print("Enter the Password to login to the Management System :    ");
-                String password = in.nextLine();
+                String password = read1.nextLine();
                 System.out.println();
 
-                if (rolesAndPermissions.isPrivilegedUserOrNot(username, password) == -1) {
+                if (r1.isPrivilegedUserOrNot(username, password) == -1) {
                     System.out.printf("\n%20sERROR!!! Unable to login Cannot find user with the entered credentials.... Try Creating New Credentials or get yourself register by pressing 4....\n", "");
-                } else if (rolesAndPermissions.isPrivilegedUserOrNot(username, password) == 0) {
+                } else if (r1.isPrivilegedUserOrNot(username, password) == 0) {
                     System.out.println("You've standard/default privileges to access the data... You can just view customers data..." + "Can't perform any actions on them....");
-                    customer.displayCustomersData(true);
+                    c1.displayCustomersData(true);
                 } else {
                     System.out.printf("%-20sLogged in Successfully as \"%s\"..... For further Proceedings, enter a value from below....", "", username);
 
@@ -55,72 +68,77 @@ public class User {
                         System.out.printf("%-30s (h) Enter 8 to Delete a Flight....\n", "");
                         System.out.printf("%-30s (i) Enter 0 to Go back to the Main Menu/Logout....\n", "");
                         System.out.print("Enter the desired Choice :   ");
-                        desiredOption = in.nextInt();
-
+                        desiredOption = read.nextInt();
+                        /*If 1 is entered by the privileged user, then add a new customer......*/
                         if (desiredOption == 1) {
-                            customer.displayArtWork(1);
-                            customer.addNewCustomer();
+                            c1.displayArtWork(1);
+                            c1.addNewCustomer();
                         } else if (desiredOption == 2) {
-
-                            customer.displayArtWork(2);
-                            customer.displayCustomersData(false);
+                            /*If 2 is entered by the privileged user, then call the search method of the Customer class*/
+                            c1.displayArtWork(2);
+                            c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Search :\t");
-                            String customerID = in.nextLine();
+                            String customerID = read1.nextLine();
                             System.out.println();
-                            customer.searchUser(customerID);
+                            c1.searchUser(customerID);
                         } else if (desiredOption == 3) {
-
+                            /*If 3 is entered by the user, then call the update method of the Customer Class with required
+                             * arguments.....
+                             * */
                             bookingAndReserving.displayArtWork(2);
-                            customer.displayCustomersData(false);
+                            c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Update its Data :\t");
-                            String customerID = in.nextLine();
-                            if (!customersCollection.isEmpty()) {
-                                customer.editUserInfo(customerID);
+                            String customerID = read1.nextLine();
+                            if (customersCollection.size() > 0) {
+                                c1.editUserInfo(customerID);
                             } else {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
                             }
 
                         } else if (desiredOption == 4) {
-
+                            /*If 4 is entered, then ask the user to enter the customer id, and then delete
+                             * that customer....
+                             * */
                             bookingAndReserving.displayArtWork(3);
-                            customer.displayCustomersData(false);
+                            c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Delete its Data :\t");
-                            String customerID = in.nextLine();
-                            if (!customersCollection.isEmpty()) {
-                                customer.deleteUser(customerID);
+                            String customerID = read1.nextLine();
+                            if (customersCollection.size() > 0) {
+                                c1.deleteUser(customerID);
                             } else {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
                             }
                         } else if (desiredOption == 5) {
-                            customer.displayArtWork(3);
-                            customer.displayCustomersData(false);
+                            /*Call the Display Method of Customer Class....*/
+                            c1.displayArtWork(3);
+                            c1.displayCustomersData(false);
                         } else if (desiredOption == 6) {
                             bookingAndReserving.displayArtWork(6);
-                            customer.displayCustomersData(false);
+                            c1.displayCustomersData(false);
                             System.out.print("\n\nEnter the ID of the user to display all flights registered by that user...");
-                            String id = in.nextLine();
+                            String id = read1.nextLine();
                             bookingAndReserving.displayFlightsRegisteredByOneUser(id);
                         } else if (desiredOption == 7) {
-                            customer.displayArtWork(4);
+                            c1.displayArtWork(4);
                             System.out.print("Do you want to display Passengers of all flights or a specific flight.... 'Y/y' for displaying all flights and 'N/n' to look for a" +
                                     " specific flight.... ");
-                            char choice = in.nextLine().charAt(0);
+                            char choice = read1.nextLine().charAt(0);
                             if ('y' == choice || 'Y' == choice) {
                                 bookingAndReserving.displayRegisteredUsersForAllFlight();
                             } else if ('n' == choice || 'N' == choice) {
-                                flight.displayFlightSchedule();
+                                f1.displayFlightSchedule();
                                 System.out.print("Enter the Flight Number to display the list of passengers registered in that flight... ");
-                                String flightNum = in.nextLine();
+                                String flightNum = read1.nextLine();
                                 bookingAndReserving.displayRegisteredUsersForASpecificFlight(flightNum);
                             } else {
                                 System.out.println("Invalid Choice...No Response...!");
                             }
                         } else if (desiredOption == 8) {
-                            customer.displayArtWork(5);
-                            flight.displayFlightSchedule();
+                            c1.displayArtWork(5);
+                            f1.displayFlightSchedule();
                             System.out.print("Enter the Flight Number to delete the flight : ");
-                            String flightNum = in.nextLine();
-                            flight.deleteFlight(flightNum);
+                            String flightNum = read1.nextLine();
+                            f1.deleteFlight(flightNum);
 
                         } else if (desiredOption == 0) {
                             bookingAndReserving.displayArtWork(22);
@@ -137,29 +155,31 @@ public class User {
                 }
             } else if (desiredOption == 2) {
                 printArtWork(2);
+                /*If desiredOption is 2, then call the registration method to register a user......*/
                 System.out.print("\nEnter the UserName to Register :    ");
-                String username = in.nextLine();
+                String username = read1.nextLine();
                 System.out.print("Enter the Password to Register :     ");
-                String password = in.nextLine();
-                while (rolesAndPermissions.isPrivilegedUserOrNot(username, password) != -1) {
+                String password = read1.nextLine();
+                while (r1.isPrivilegedUserOrNot(username, password) != -1) {
                     System.out.print("ERROR!!! Admin with same UserName already exist. Enter new UserName:   ");
-                    username = in.nextLine();
+                    username = read1.nextLine();
                     System.out.print("Enter the Password Again:   ");
-                    password = in.nextLine();
+                    password = read1.nextLine();
                 }
 
-
+                /*Setting the credentials entered by the user.....*/
                 adminUserNameAndPassword[countNumOfUsers][0] = username;
                 adminUserNameAndPassword[countNumOfUsers][1] = password;
 
+                /*Incrementing the numOfUsers */
                 countNumOfUsers++;
             } else if (desiredOption == 3) {
                 printArtWork(3);
                 System.out.print("\n\nEnter the Email to Login : \t");
-                String userName = in.nextLine();
+                String userName = read1.nextLine();
                 System.out.print("Enter the Password : \t");
-                String password = in.nextLine();
-                String[] result = rolesAndPermissions.isPassengerRegistered(userName, password).split("-");
+                String password = read1.nextLine();
+                String[] result = r1.isPassengerRegistered(userName, password).split("-");
 
                 if (Integer.parseInt(result[0]) == 1) {
                     int desiredChoice;
@@ -174,28 +194,28 @@ public class User {
                         System.out.printf("%-40s (f) Enter 6 to Display all flights registered by \"%s\"....\n", "", userName);
                         System.out.printf("%-40s (g) Enter 0 to Go back to the Main Menu/Logout....\n", "");
                         System.out.print("Enter the desired Choice :   ");
-                        desiredChoice = in.nextInt();
+                        desiredChoice = read.nextInt();
                         if (desiredChoice == 1) {
                             bookingAndReserving.displayArtWork(1);
-                            flight.displayFlightSchedule();
+                            f1.displayFlightSchedule();
                             System.out.print("\nEnter the desired flight number to book :\t ");
-                            String flightToBeBooked = in.nextLine();
+                            String flightToBeBooked = read1.nextLine();
                             System.out.print("Enter the Number of tickets for " + flightToBeBooked + " flight :   ");
-                            int numOfTickets = in.nextInt();
+                            int numOfTickets = read.nextInt();
                             while (numOfTickets > 10) {
                                 System.out.print("ERROR!! You can't book more than 10 tickets at a time for single flight....Enter number of tickets again : ");
-                                numOfTickets = in.nextInt();
+                                numOfTickets = read.nextInt();
                             }
                             bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
                         } else if (desiredChoice == 2) {
                             bookingAndReserving.displayArtWork(2);
-                            customer.editUserInfo(result[1]);
+                            c1.editUserInfo(result[1]);
                         } else if (desiredChoice == 3) {
                             bookingAndReserving.displayArtWork(3);
                             System.out.print("Are you sure to delete your account...It's an irreversible action...Enter Y/y to confirm...");
-                            char confirmationChar = in.nextLine().charAt(0);
+                            char confirmationChar = read1.nextLine().charAt(0);
                             if (confirmationChar == 'Y' || confirmationChar == 'y') {
-                                customer.deleteUser(result[1]);
+                                c1.deleteUser(result[1]);
                                 System.out.printf("User %s's account deleted Successfully...!!!", userName);
                                 desiredChoice = 0;
                             } else {
@@ -203,8 +223,8 @@ public class User {
                             }
                         } else if (desiredChoice == 4) {
                             bookingAndReserving.displayArtWork(4);
-                            flight.displayFlightSchedule();
-                            flight.displayMeasurementInstructions();
+                            f1.displayFlightSchedule();
+                            f1.displayMeasurementInstructions();
                         } else if (desiredChoice == 5) {
                             bookingAndReserving.displayArtWork(5);
                             bookingAndReserving.cancelFlight(result[1]);
@@ -225,18 +245,19 @@ public class User {
                 }
             } else if (desiredOption == 4) {
                 printArtWork(4);
-                customer.addNewCustomer();
+                c1.addNewCustomer();
             } else if (desiredOption == 5) {
                 manualInstructions();
             }
 
             displayMainMenu();
-            desiredOption = in.nextInt();
+            desiredOption = read1.nextInt();
             while (desiredOption < 0 || desiredOption > 8) {
                 System.out.print("ERROR!! Please enter value between 0 - 4. Enter the value again :\t");
-                desiredOption = in.nextInt();
+                desiredOption = read1.nextInt();
             }
         } while (desiredOption != 0);
+        welcomeScreen(-1);
     }
 
     static void displayMainMenu() {
@@ -250,15 +271,15 @@ public class User {
     }
 
     static void manualInstructions() {
-        Scanner in = new Scanner(System.in);
+        Scanner read = new Scanner(System.in);
         System.out.printf("%n%n%50s %s Welcome to BAV Airlines User Manual %s", "", "+++++++++++++++++", "+++++++++++++++++");
         System.out.println("\n\n\t\t(a) Press 1 to display Admin Manual.");
         System.out.println("\t\t(b) Press 2 to display User Manual.");
         System.out.print("\nEnter the desired option :    ");
-        int choice = in.nextInt();
+        int choice = read.nextInt();
         while (choice < 1 || choice > 2) {
             System.out.print("ERROR!!! Invalid entry...Please enter a value either 1 or 2....Enter again....");
-            choice = in.nextInt();
+            choice = read.nextInt();
         }
         if (choice == 1) {
             System.out.println("\n\n(1) Admin have the access to all users data...Admin can delete, update, add and can perform search for any customer...\n");
@@ -286,6 +307,51 @@ public class User {
             System.out.println("(11) Pressing \"6\" will display all flights registered by you...\n");
             System.out.println("(12) Pressing \"0\" will make you logout of the program...You can login back at anytime with your credentials...for this particular run-time... \n");
         }
+    }
+
+    static void welcomeScreen(int option) {
+        String artWork;
+
+        if (option == 1) {
+            artWork = """
+
+                    888       888          888                                                888                   888888b.          d8888 888     888              d8888 d8b         888 d8b                           \s
+                    888   o   888          888                                                888                   888  "88b        d88888 888     888             d88888 Y8P         888 Y8P                           \s
+                    888  d8b  888          888                                                888                   888  .88P       d88P888 888     888            d88P888             888                               \s
+                    888 d888b 888  .d88b.  888  .d8888b  .d88b.  88888b.d88b.   .d88b.        888888  .d88b.        8888888K.      d88P 888 Y88b   d88P           d88P 888 888 888d888 888 888 88888b.   .d88b.  .d8888b \s
+                    888d88888b888 d8P  Y8b 888 d88P"    d88""88b 888 "888 "88b d8P  Y8b       888    d88""88b       888  "Y88b    d88P  888  Y88b d88P           d88P  888 888 888P"   888 888 888 "88b d8P  Y8b 88K     \s
+                    88888P Y88888 88888888 888 888      888  888 888  888  888 88888888       888    888  888       888    888   d88P   888   Y88o88P           d88P   888 888 888     888 888 888  888 88888888 "Y8888b.\s
+                    8888P   Y8888 Y8b.     888 Y88b.    Y88..88P 888  888  888 Y8b.           Y88b.  Y88..88P       888   d88P  d8888888888    Y888P           d8888888888 888 888     888 888 888  888 Y8b.          X88\s
+                    888P     Y888  "Y8888  888  "Y8888P  "Y88P"  888  888  888  "Y8888         "Y888  "Y88P"        8888888P"  d88P     888     Y8P           d88P     888 888 888     888 888 888  888  "Y8888   88888P'\s
+                                                                                                                                                                                                                         \s
+                                                                                                                                                                                                                         \s
+                                                                                                                                                                                                                         \s
+                    """;
+        } else {
+            artWork = """
+                                        
+                                        
+                                        
+                                        
+                    d88888b db      db    db d888888b d8b   db  d888b       db   d8b   db d888888b d888888b db   db      d888888b d8888b. db    db .d8888. d888888b      \s
+                    88'     88      `8b  d8'   `88'   888o  88 88' Y8b      88   I8I   88   `88'   `~~88~~' 88   88      `~~88~~' 88  `8D 88    88 88'  YP `~~88~~'      \s
+                    88ooo   88       `8bd8'     88    88V8o 88 88           88   I8I   88    88       88    88ooo88         88    88oobY' 88    88 `8bo.      88         \s
+                    88~~~   88         88       88    88 V8o88 88  ooo      Y8   I8I   88    88       88    88~~~88         88    88`8b   88    88   `Y8b.    88         \s
+                    88      88booo.    88      .88.   88  V888 88. ~8~      `8b d8'8b d8'   .88.      88    88   88         88    88 `88. 88b  d88 db   8D    88         \s
+                    YP      Y88888P    YP    Y888888P VP   V8P  Y888P        `8b8' `8d8'  Y888888P    YP    YP   YP         YP    88   YD ~Y8888P' `8888Y'    YP         \s
+                                                                                                                                                                         \s
+                                                                                                                                                                         \s
+                    d88888b  .d88b.  d8888b.      d88888b d888888b db    db d88888b      d8888b. d88888b  .o88b.  .d8b.  d8888b. d88888b .d8888.                       db\s
+                    88'     .8P  Y8. 88  `8D      88'       `88'   88    88 88'          88  `8D 88'     d8P  Y8 d8' `8b 88  `8D 88'     88'  YP                       88\s
+                    88ooo   88    88 88oobY'      88ooo      88    Y8    8P 88ooooo      88   88 88ooooo 8P      88ooo88 88   88 88ooooo `8bo.                         YP\s
+                    88~~~   88    88 88`8b        88~~~      88    `8b  d8' 88~~~~~      88   88 88~~~~~ 8b      88~~~88 88   88 88~~~~~   `Y8b.                         \s
+                    88      `8b  d8' 88 `88.      88        .88.    `8bd8'  88.          88  .8D 88.     Y8b  d8 88   88 88  .8D 88.     db   8D      db db db db      db\s
+                    YP       `Y88P'  88   YD      YP      Y888888P    YP    Y88888P      Y8888D' Y88888P  `Y88P' YP   YP Y8888D' Y88888P `8888Y'      VP VP VP VP      YP\s
+                                                                                                                                                                         \s
+                                                                                                                                                                         \s
+                    """;
+        }
+        System.out.println(artWork);
     }
 
     static void printArtWork(int option) {
@@ -343,10 +409,9 @@ public class User {
         System.out.println(artWork);
     }
 
+    //        ************************************************************ Setters & Getters ************************************************************
+
     public static List<Customer> getCustomersCollection() {
         return customersCollection;
     }
-
-    static String[][] adminUserNameAndPassword = new String[10][2];
-    private static final List<Customer> customersCollection = new ArrayList<>();
 }
