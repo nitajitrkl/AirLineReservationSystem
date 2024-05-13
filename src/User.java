@@ -395,8 +395,6 @@ public class User {
         System.out.println(artWork);
     }
 
-    //        ************************************************************ Setters & Getters ************************************************************
-
     public static List<Customer> getCustomersCollection() {
         return customersCollection;
     }
