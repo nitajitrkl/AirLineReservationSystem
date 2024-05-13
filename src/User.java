@@ -334,15 +334,7 @@ public class User {
                     88      88booo.    88      .88.   88  V888 88. ~8~      `8b d8'8b d8'   .88.      88    88   88         88    88 `88. 88b  d88 db   8D    88         \s
                     YP      Y88888P    YP    Y888888P VP   V8P  Y888P        `8b8' `8d8'  Y888888P    YP    YP   YP         YP    88   YD ~Y8888P' `8888Y'    YP         \s
                                                                                                                                                                          \s
-                                                                                                                                                                         \s
-                    d88888b  .d88b.  d8888b.      d88888b d888888b db    db d88888b      d8888b. d88888b  .o88b.  .d8b.  d8888b. d88888b .d8888.                       db\s
-                    88'     .8P  Y8. 88  `8D      88'       `88'   88    88 88'          88  `8D 88'     d8P  Y8 d8' `8b 88  `8D 88'     88'  YP                       88\s
-                    88ooo   88    88 88oobY'      88ooo      88    Y8    8P 88ooooo      88   88 88ooooo 8P      88ooo88 88   88 88ooooo `8bo.                         YP\s
-                    88~~~   88    88 88`8b        88~~~      88    `8b  d8' 88~~~~~      88   88 88~~~~~ 8b      88~~~88 88   88 88~~~~~   `Y8b.                         \s
-                    88      `8b  d8' 88 `88.      88        .88.    `8bd8'  88.          88  .8D 88.     Y8b  d8 88   88 88  .8D 88.     db   8D      db db db db      db\s
-                    YP       `Y88P'  88   YD      YP      Y888888P    YP    Y88888P      Y8888D' Y88888P  `Y88P' YP   YP Y8888D' Y88888P `8888Y'      VP VP VP VP      YP\s
-                                                                                                                                                                         \s
-                                                                                                                                                                         \s
+                   
                     """;
         }
         System.out.println(artWork);
