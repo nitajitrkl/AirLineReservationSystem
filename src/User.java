@@ -69,12 +69,10 @@ public class User {
                         System.out.printf("%-30s (i) Enter 0 to Go back to the Main Menu/Logout....\n", "");
                         System.out.print("Enter the desired Choice :   ");
                         desiredOption = read.nextInt();
-                        /*If 1 is entered by the privileged user, then add a new customer......*/
                         if (desiredOption == 1) {
                             c1.displayArtWork(1);
                             c1.addNewCustomer();
                         } else if (desiredOption == 2) {
-                            /*If 2 is entered by the privileged user, then call the search method of the Customer class*/
                             c1.displayArtWork(2);
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Search :\t");
@@ -82,9 +80,7 @@ public class User {
                             System.out.println();
                             c1.searchUser(customerID);
                         } else if (desiredOption == 3) {
-                            /*If 3 is entered by the user, then call the update method of the Customer Class with required
-                             * arguments.....
-                             * */
+
                             bookingAndReserving.displayArtWork(2);
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Update its Data :\t");
@@ -96,9 +92,7 @@ public class User {
                             }
 
                         } else if (desiredOption == 4) {
-                            /*If 4 is entered, then ask the user to enter the customer id, and then delete
-                             * that customer....
-                             * */
+
                             bookingAndReserving.displayArtWork(3);
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Delete its Data :\t");
@@ -109,7 +103,7 @@ public class User {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
                             }
                         } else if (desiredOption == 5) {
-                            /*Call the Display Method of Customer Class....*/
+
                             c1.displayArtWork(3);
                             c1.displayCustomersData(false);
                         } else if (desiredOption == 6) {
@@ -167,11 +161,11 @@ public class User {
                     password = read1.nextLine();
                 }
 
-                /*Setting the credentials entered by the user.....*/
+
                 adminUserNameAndPassword[countNumOfUsers][0] = username;
                 adminUserNameAndPassword[countNumOfUsers][1] = password;
 
-                /*Incrementing the numOfUsers */
+
                 countNumOfUsers++;
             } else if (desiredOption == 3) {
                 printArtWork(3);
@@ -315,17 +309,17 @@ public class User {
         if (option == 1) {
             artWork = """
 
-                    888       888          888                                                888                   888888b.          d8888 888     888              d8888 d8b         888 d8b                           \s
-                    888   o   888          888                                                888                   888  "88b        d88888 888     888             d88888 Y8P         888 Y8P                           \s
-                    888  d8b  888          888                                                888                   888  .88P       d88P888 888     888            d88P888             888                               \s
-                    888 d888b 888  .d88b.  888  .d8888b  .d88b.  88888b.d88b.   .d88b.        888888  .d88b.        8888888K.      d88P 888 Y88b   d88P           d88P 888 888 888d888 888 888 88888b.   .d88b.  .d8888b \s
-                    888d88888b888 d8P  Y8b 888 d88P"    d88""88b 888 "888 "88b d8P  Y8b       888    d88""88b       888  "Y88b    d88P  888  Y88b d88P           d88P  888 888 888P"   888 888 888 "88b d8P  Y8b 88K     \s
-                    88888P Y88888 88888888 888 888      888  888 888  888  888 88888888       888    888  888       888    888   d88P   888   Y88o88P           d88P   888 888 888     888 888 888  888 88888888 "Y8888b.\s
-                    8888P   Y8888 Y8b.     888 Y88b.    Y88..88P 888  888  888 Y8b.           Y88b.  Y88..88P       888   d88P  d8888888888    Y888P           d8888888888 888 888     888 888 888  888 Y8b.          X88\s
-                    888P     Y888  "Y8888  888  "Y8888P  "Y88P"  888  888  888  "Y8888         "Y888  "Y88P"        8888888P"  d88P     888     Y8P           d88P     888 888 888     888 888 888  888  "Y8888   88888P'\s
-                                                                                                                                                                                                                         \s
-                                                                                                                                                                                                                         \s
-                                                                                                                                                                                                                         \s
+                    888       888          888                                                \s
+                    888   o   888          888                                                \s
+                    888  d8b  888          888                                                \s
+                    888 d888b 888  .d88b.  888  .d8888b  .d88b.  88888b.d88b.   .d88b.        \s
+                    888d88888b888 d8P  Y8b 888 d88P"    d88""88b 888 "888 "88b d8P  Y8b       \s
+                    88888P Y88888 88888888 888 888      888  888 888  888  888 88888888       \s
+                    8888P   Y8888 Y8b.     888 Y88b.    Y88..88P 888  888  888 Y8b.           \s
+                    888P     Y888  "Y8888  888  "Y8888P  "Y88P"  888  888  888  "Y8888        \s
+                                                                                              \s
+                                                                                              \s
+                                                                                              \s
                     """;
         } else {
             artWork = """
